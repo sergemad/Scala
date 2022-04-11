@@ -97,8 +97,12 @@ object HelloWorl {
         generateGreetingList(guestsFromFile,greetUserFun,greetUserFun2)
     }
 
+    def Exercice9(name:String): Unit = {
+        println(s"Hello, $name !")
+    }
+
     def main(args: Array[String]): Unit = {
 
-        Exercice8()
+        Exercice9(args(0))
     }
 }
