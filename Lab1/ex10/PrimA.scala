@@ -89,6 +89,18 @@ def Exercice17(userinfo: Map[String,String],useract: Map[String,String],date: St
     return res
 }
 
+def Exercice18(l:List[String]): Unit = {
+    var str:String = ""
+    for (i <- until l.size){
+        str = str + i + "\n" 
+    }
+    var file = new File("PrimA.txt")
+    var bw = new BufferedWriter(new FileWriter(file))
+    bw.write(str)
+    bw.close()
+} 
+
+
 var map : Map[String, String] = Exercice15("/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/userActivities.txt")
 var map1 : Map[String,String] = Exercice12("/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/userInfo.txt")
 var res : List[String] = Exercice17(map1,map,"20220404")
