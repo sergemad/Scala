@@ -1,13 +1,14 @@
 import scala.collection.mutable.Map
 import scala.io.Source.fromFile
 import scala.io.StdIn.readLine
+import java.io._
 
 def Exercice11(map:Map[String,String], name:String,
-surname:String, date_of_birth:String): Unit ={
+surname:String, date_of_birth:String): Map[String, String] ={
     map("name") = name
     map("surname") = surname
     map("date of birth") = date_of_birth
-    println(map)
+    return map
 }
 
 def Exercice12(filename:String): Map[String,String] ={
@@ -23,14 +24,14 @@ def Exercice12(filename:String): Map[String,String] ={
 }
 
 
-def Exercice14(map:Map[String,String]): Unit ={
+def Exercice14(map:Map[String,String]): Map[String, String] ={
     println("Enter the time activite as <yyyymmdd hhmmss> : ")
     var time_ac = readLine()
     println("Enter the name  of your activite : ")
     var name = readLine()
 
     map += (time_ac -> name)
-    println(map)
+    return map
 }
 
 def Exercice15(filename:String): Map[String,String] ={
@@ -91,22 +92,80 @@ def Exercice17(userinfo: Map[String,String],useract: Map[String,String],date: St
 
 def Exercice18(l:List[String]): Unit = {
     var str:String = ""
-    for (i <- until l.size){
+    for (i <- l.reverse){
         str = str + i + "\n" 
     }
-    var file = new File("PrimA.txt")
+    println("Enter the file name tou want (exemple: Prima.txt):")
+    var filename : String = readLine()
+    var file = new File(s"$filename")
     var bw = new BufferedWriter(new FileWriter(file))
     bw.write(str)
     bw.close()
 } 
 
+def Exercice19(): Unit ={
+    var exit:Boolean = false
+    var userI: Map[String, String] = Map()
+    var userA: Map[String, String] = Map()
 
-var map : Map[String, String] = Exercice15("/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/userActivities.txt")
-var map1 : Map[String,String] = Exercice12("/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/userInfo.txt")
-var res : List[String] = Exercice17(map1,map,"20220404")
-println(res)
-//Exercice16(map,"20220404")
-//Exercice15("/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/userActivities.txt")
-//Exercice14(map)
-//Exercice12("/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/userInfo.txt")
-//Exercice11(map,"Keita","Serge","07/01/2000")
+    while (exit == false){
+        println("1. Create a user from a given file")
+        println("2. update user from the command line")
+        println("3. Add user activities from a given file")
+        println("4. Add a user activity from the command line")
+        println("5. Greet and show activies for a given day")
+        println("6. write a greeting and the activities for a given day in a file")
+        println("7. Exit")
+        println("\nChose between 1 to 7 ")
+
+        var select : String = readLine()
+        if (select == "7"){
+            exit = true
+        }
+        else if (select == "1"){
+            println("Enter the name of the file (userInfo.txt):")
+            var userInfo : String = readLine() 
+            userI = Exercice12(s"/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/$userInfo")
+            println(userI)
+        }
+        else if (select == "2"){
+            println("Enter the name:")
+            var name:String = readLine()
+            println("Enter the surname:")
+            var surname:String = readLine()
+            println("Enter the date of birth (exemple: 20220404):")
+            var date_birth:String = readLine()
+            userI = Exercice11(userI,name,surname,date_birth)
+            println(userI)
+        }
+        else if (select == "3"){
+            println("Enter the name of the file (userActivities.txt):")
+            var userActivities : String = readLine() 
+            userA = Exercice15(s"/Users/sergekeita/Desktop/Learning/M1_Efrei/Scala/Lab1/ex10/$userActivities")
+            println(userA)
+        }
+        else if (select == "4"){
+            userA = Exercice14(userA)
+            println(userA)
+        }
+        else if (select == "5"){
+            println("Enter the corresponding day (exemple: 20220404):")
+            var day : String = readLine() 
+            var greet : List[String] = Exercice17(userI,userA,day)
+            println(greet)
+        }
+        else if (select == "6"){
+            println("Enter the corresponding day (exemple: 20220404):")
+            var day : String = readLine() 
+            var greet : List[String] = Exercice17(userI,userA,day)
+            Exercice18(greet)
+        }
+        else {
+            println("ERROR: bad entry")
+        }
+    }
+}
+
+
+Exercice19()
+
